@@ -1,10 +1,12 @@
 package com.example.appdemo2.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.appdemo2.Activity.DanhsachbaihatActivity;
+import com.example.appdemo2.Activity.DanhsachcacplaylistActivity;
 import com.example.appdemo2.Adapter.PlaylistAdapter;
 import com.example.appdemo2.Model.Playlist;
 import com.example.appdemo2.R;
@@ -46,6 +50,14 @@ public class Fragment_Playlist extends Fragment {
         txtxemthemplaylist = (TextView) view.findViewById(R.id.textviewmoreplaylist);
 
         GetData();
+
+        txtxemthemplaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhsachcacplaylistActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -59,6 +71,14 @@ public class Fragment_Playlist extends Fragment {
                 playlistAdapter = new PlaylistAdapter(getActivity(),android.R.layout.simple_list_item_1,mangplaylist);
                 lvplaylist.setAdapter(playlistAdapter);
                 setListViewHeightBasedOnChildren(lvplaylist);
+                lvplaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getActivity(), DanhsachbaihatActivity.class);
+                        intent.putExtra("itemplaylist",mangplaylist.get(position));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override

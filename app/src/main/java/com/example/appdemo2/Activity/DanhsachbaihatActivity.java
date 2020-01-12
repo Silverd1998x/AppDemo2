@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.example.appdemo2.Adapter.DanhsachbaihatAdapter;
 import com.example.appdemo2.Model.Baihat;
+import com.example.appdemo2.Model.Playlist;
 import com.example.appdemo2.Model.Quangcao;
 import com.example.appdemo2.R;
 import com.example.appdemo2.Service.APIService;
@@ -49,6 +50,8 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
     DanhsachbaihatAdapter danhsachbaihatAdapter;
 
     Quangcao quangcao;
+    Playlist playlist;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,29 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             setValueInView(quangcao.getTenBaiHat(),quangcao.getHinhBaiHat());
             GetDataQuangcao(quangcao.getIdQuangCao());
         }
+        if (playlist != null && !playlist.getTen().equals("")){
+            setValueInView(playlist.getTen(),playlist.getHinhPlaylist());
+            GetDataPlaylist(playlist.getIdPlaylist());
+        }
+    }
+
+    private void GetDataPlaylist(String idplaylist) {
+        Dataservice dataservice = APIService.getService();
+        Call<List<Baihat>> callback = dataservice.GetDanhsachbaihattheoplaylist(idplaylist);
+        callback.enqueue(new Callback<List<Baihat>>() {
+            @Override
+            public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
+                mangbaihat = (ArrayList<Baihat>) response.body();
+                danhsachbaihatAdapter = new DanhsachbaihatAdapter(DanhsachbaihatActivity.this,mangbaihat);
+                recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+                recyclerViewdanhsachbaihat.setAdapter(danhsachbaihatAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Baihat>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void GetDataQuangcao(String idquangcao) {
@@ -125,6 +151,9 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
         if (intent != null){
             if (intent.hasExtra("banner")){
                 quangcao = (Quangcao) intent.getSerializableExtra("banner");
+            }
+            if (intent.hasExtra("itemplaylist")) {
+                playlist = (Playlist) intent.getSerializableExtra("itemplaylist");
             }
         }
     }
