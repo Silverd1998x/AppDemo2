@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.appdemo2.Adapter.DanhsachbaihatAdapter;
 import com.example.appdemo2.Model.Baihat;
 import com.example.appdemo2.Model.Quangcao;
 import com.example.appdemo2.R;
@@ -44,6 +46,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     ImageView imgdanhsachcakhuc;
     ArrayList<Baihat> mangbaihat;
+    DanhsachbaihatAdapter danhsachbaihatAdapter;
 
     Quangcao quangcao;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -67,7 +70,9 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
                mangbaihat = (ArrayList<Baihat>) response.body();
-
+               danhsachbaihatAdapter = new DanhsachbaihatAdapter(DanhsachbaihatActivity.this,mangbaihat);
+               recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+               recyclerViewdanhsachbaihat.setAdapter(danhsachbaihatAdapter);
             }
 
             @Override
