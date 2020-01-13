@@ -1,5 +1,6 @@
 package com.example.appdemo2.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.appdemo2.Activity.DanhsachbaihatActivity;
+import com.example.appdemo2.Activity.DanhsachtatcachudeActivity;
+import com.example.appdemo2.Activity.DanhsachtheloaitheochudeActivity;
 import com.example.appdemo2.Model.ChuDe;
 import com.example.appdemo2.Model.TheLoai;
 import com.example.appdemo2.Model.Theloaitrongngay;
@@ -39,6 +43,13 @@ public class Fragment_ChuDe_TheLoai_ToDay extends Fragment {
         view = inflater.inflate(R.layout.fragment_chude_theloai_today,container,false);
         txtxemthemchudetheloai = (TextView) view.findViewById(R.id.textviewxemthemchudetheloai);
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.horizontalScrollview);
+        txtxemthemchudetheloai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhsachtatcachudeActivity.class);
+                startActivity(intent);
+            }
+        });
         GetData();
         return view;
     }
@@ -73,6 +84,16 @@ public class Fragment_ChuDe_TheLoai_ToDay extends Fragment {
                     cardView.setLayoutParams(layout);
                     cardView.addView(imageView);
                     linearLayout.addView(cardView);
+
+                    final int finalI = i;
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), DanhsachtheloaitheochudeActivity.class);
+                            intent.putExtra("chude",chuDeArraylist.get(finalI));
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 for (int j=0; j < theLoaiArraylist.size(); j++){
@@ -86,6 +107,16 @@ public class Fragment_ChuDe_TheLoai_ToDay extends Fragment {
                     cardView.setLayoutParams(layout);
                     cardView.addView(imageView);
                     linearLayout.addView(cardView);
+
+                    final int finalJ = j;
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), DanhsachbaihatActivity.class);
+                            intent.putExtra("idtheloai",theLoaiArraylist.get(finalJ));
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 horizontalScrollView.addView(linearLayout);

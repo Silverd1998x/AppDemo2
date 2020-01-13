@@ -12,54 +12,56 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appdemo2.Activity.DanhsachbaihatActivity;
-import com.example.appdemo2.Model.Playlist;
+import com.example.appdemo2.Activity.DanhsachtheloaitheochudeActivity;
+import com.example.appdemo2.Model.TheLoai;
 import com.example.appdemo2.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DanhsachcacplaylistAdapter extends RecyclerView.Adapter<DanhsachcacplaylistAdapter.ViewHolder> {
-    Context context;
-    ArrayList<Playlist> mangplaylist;
+public class DanhsachtheloaitheochudeAdapter extends RecyclerView.Adapter<DanhsachtheloaitheochudeAdapter.ViewHolder> {
 
-    public DanhsachcacplaylistAdapter(Context context, ArrayList<Playlist> mangplaylist) {
+    Context context;
+    ArrayList<TheLoai> theLoaiArrayList;
+
+    public DanhsachtheloaitheochudeAdapter(Context context, ArrayList<TheLoai> theLoaiArrayList) {
         this.context = context;
-        this.mangplaylist = mangplaylist;
+        this.theLoaiArrayList = theLoaiArrayList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dong_danh_sach_cac_playlist,parent,false);
+        LayoutInflater inflater =LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.dong_the_loai_theo_chu_de,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Playlist playlist = mangplaylist.get(position);
-        Picasso.with(context).load(playlist.getHinhPlaylist()).into(holder.imghinhnen);
-        holder.txtplaylist.setText(playlist.getTen());
+        TheLoai theloai = theLoaiArrayList.get(position);
+        Picasso.with(context).load(theloai.getHinhtheloai()).into(holder.imghinhnen);
+        holder.txttentheloai.setText(theloai.getTentheloai());
     }
 
     @Override
     public int getItemCount() {
-        return mangplaylist.size();
+        return theLoaiArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imghinhnen;
-        TextView txtplaylist;
+        TextView txttentheloai;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imghinhnen = itemView.findViewById(R.id.imageviewdanhsachcacplaylist);
-            txtplaylist = itemView.findViewById(R.id.textviewdanhsachcacplaylist);
+            imghinhnen = itemView.findViewById(R.id.imageviewtheloaitheochude);
+            txttentheloai = itemView.findViewById(R.id.textviewtentheloaitheochude);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, DanhsachbaihatActivity.class);
-                    intent.putExtra("itemplaylist",mangplaylist.get(getPosition()));
+                    intent.putExtra("idtheloai",theLoaiArrayList.get(getPosition()));
                     context.startActivity(intent);
                 }
             });

@@ -2,8 +2,10 @@ package com.example.appdemo2.Service;
 
 import com.example.appdemo2.Model.Album;
 import com.example.appdemo2.Model.Baihat;
+import com.example.appdemo2.Model.ChuDe;
 import com.example.appdemo2.Model.Playlist;
 import com.example.appdemo2.Model.Quangcao;
+import com.example.appdemo2.Model.TheLoai;
 import com.example.appdemo2.Model.Theloaitrongngay;
 
 import java.util.List;
@@ -41,4 +43,15 @@ public interface Dataservice {
 
     @GET("danhsachcacplaylist.php")
     Call<List<Playlist>> GetDanhsachcacplaylist();
+
+    @FormUrlEncoded
+    @POST("danhsachbaihat.php")
+    Call<List<Baihat>> GetDanhsachbaihattheotheloai(@Field("idtheloai") String idtheloai);
+
+    @GET("tatcachude.php")
+    Call<List<ChuDe>> GetAllchude();
+
+    @FormUrlEncoded
+    @POST("theloaitheochude.php")
+    Call<List<TheLoai>> GetTheloaitheochude(@Field("idchude") String idchude);
 }
